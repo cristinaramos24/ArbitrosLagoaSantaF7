@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIGA F7 LAGOA SANTA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Horizon&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Horizon', sans-serif;
+            background-color: #001f3f;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        h1, h2 {
+            margin: 0;
+        }
+        h1 {
+            font-size: 2.5rem;
+        }
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        input[type="text"], input[type="password"], input[type="time"], input[type="date"] {
+            margin: 5px;
+            padding: 5px;
+            border-radius: 4px;
+            border: none;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .schedule-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .schedule-list li {
+            background-color: #0056b3;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .schedule-list li a {
+            color: #dc3545;
+            text-decoration: none;
+        }
+        .schedule-list li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>LIGA F7 LAGOA SANTA</h1>
+    <h2>Login</h2>
+    <div id="loginDiv">
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Usuário" required>
+            <input type="password" id="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+    </div>
+
+    <div id="dashboard" style="display: none;">
+        <h2>Disponibilidade</h2>
+        <form id="scheduleForm">
+            <input type="text" id="name" placeholder="Nome" required>
+            <input type="text" id="surname" placeholder="Sobrenome" required>
+            <input type="date" id="date" required>
+            <input type="time" id="startTime" required>
+            <input type="time" id="endTime" required>
+            <button type="submit">Salvar</button>
+        </form>
+        <ul class="schedule-list" id="scheduleList"></ul>
+    </div>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            // Verifica as credenciais
+            if ((username === 'admin' && password === 'lagoasantaf7') || 
+                (username === 'user' && password === 'senha2024')) {
+                document.getElementById('loginDiv').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+            } else {
+                alert('Usuário ou senha inválidos!');
+            }
+        });
+
+        document.getElementById('scheduleForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const surname = document.getElementById('surname').value;
+            const date = document.getElementById('date').value;
+            const startTime = document.getElementById('startTime').value;
+            const endTime = document.getElementById('endTime').value;
+
+            const li = document.createElement('li');
+            li.textContent = `${name} ${surname} - ${date} ${startTime} a ${endTime}`;
+            const deleteLink = document.createElement('a');
+            deleteLink.textContent = 'Excluir';
+            deleteLink.href = '#';
+            deleteLink.onclick = function() {
+                li.remove();
+            };
+            li.appendChild(deleteLink);
+            document.getElementById('scheduleList').appendChild(li);
+
+            // Limpar os campos após salvar
+            document.getElementById('scheduleForm').reset();
+        });
+    </script>
+</body>
+</html>
